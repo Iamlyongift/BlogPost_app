@@ -14,6 +14,7 @@ export const RegisterUser = async (req: Request, res: Response) => {
     const password = req.body.password;
     const confirm_password = req.body.confirm_password;
     const phoneNumber = req.body.phoneNumber;
+    const country = req.body.phoneNumber;
     const age = req.body.age;
 
     //validate user
@@ -36,6 +37,7 @@ export const RegisterUser = async (req: Request, res: Response) => {
         email,
         password: passwordHash,
         phoneNumber,
+        country,
         age,
       });
       return res.status(200).json({
@@ -47,7 +49,7 @@ export const RegisterUser = async (req: Request, res: Response) => {
     //token
 
     res.status(400).json({
-      message: "User already exixt",
+      message: "User already exist",
     });
   } catch (error) {
     console.log(error);

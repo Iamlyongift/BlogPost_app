@@ -26,6 +26,7 @@ const RegisterUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const password = req.body.password;
         const confirm_password = req.body.confirm_password;
         const phoneNumber = req.body.phoneNumber;
+        const country = req.body.phoneNumber;
         const age = req.body.age;
         const validateUser = utils_1.RegisterSchema.validate(req.body, utils_1.option);
         if (validateUser.error) {
@@ -40,6 +41,7 @@ const RegisterUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 email,
                 password: passwordHash,
                 phoneNumber,
+                country,
                 age,
             });
             return res.status(200).json({
@@ -48,7 +50,7 @@ const RegisterUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             });
         }
         res.status(400).json({
-            message: "User already exixt",
+            message: "User already exist",
         });
     }
     catch (error) {
