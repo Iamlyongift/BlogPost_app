@@ -40,10 +40,10 @@ exports.option = {
 exports.creatBlogPostSchema = joi_1.default.object({
     title: joi_1.default.string().required(),
     content: joi_1.default.string().required(),
-    image: joi_1.default.string().required()
+    pictures: joi_1.default.array().items(joi_1.default.string()),
 });
 exports.updateBlogPostSchema = joi_1.default.object({
     title: joi_1.default.string().required(),
     content: joi_1.default.string().required(),
-    image: joi_1.default.string().required()
+    pictures: joi_1.default.string().required()
 });

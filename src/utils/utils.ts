@@ -38,11 +38,11 @@ export const option = {
 export const creatBlogPostSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
-  image: Joi.string().required()
+  pictures: Joi.array().items(Joi.string()),
 })
 
 export const updateBlogPostSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
-  image: Joi.string().required()
+  pictures: Joi.string().required()
 })    

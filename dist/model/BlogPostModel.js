@@ -6,7 +6,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const todoSchema = new mongoose_1.default.Schema({
     title: { type: String },
     content: { type: String },
-    image: { type: String },
+    pictures: { type: String },
     user: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,

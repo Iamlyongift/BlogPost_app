@@ -12,31 +12,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteSingleTodo = exports.getUserTodos = exports.singleTodo = exports.getTodos = exports.updateTodo = exports.createTodo = void 0;
+exports.deleteSingleTodo = exports.getUserTodos = exports.singleTodo = exports.getTodos = exports.updateTodo = exports.createPost = void 0;
 const utils_1 = require("../utils/utils");
 const BlogPostModel_1 = __importDefault(require("../model/BlogPostModel"));
-const createTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const cloudinary_1 = require("cloudinary");
+const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const verify = req.user;
-        const validateUser = utils_1.creatTodoSchema.validate(req.body, utils_1.option);
+        const validateUser = utils_1.creatBlogPostSchema.validate(req.body, utils_1.option);
         if (validateUser.error) {
             res.status(400).json({ Error: validateUser.error.details[0].message });
         }
-        const newTodo = yield BlogPostModel_1.default.create(Object.assign(Object.assign({}, req.body), { user: verify._id }));
+        let links = [];
+        if (Array.isArray(req.files) && req.files.length > 0) {
+            links = yield Promise.all(req.files.map((item) => __awaiter(void 0, void 0, void 0, function* () {
+                const result = yield cloudinary_1.v2.uploader.upload(item.path);
+                return result.secure_url;
+            })));
+        }
+        const newPost = yield BlogPostModel_1.default.create(Object.assign(Object.assign({}, validateUser.value), { user: verify._id, pictures: links.join(",") }));
         return res
             .status(200)
-            .json({ message: "Todo created successfully", newTodo });
+            .json({ message: "Blog Post created successfully", newPost });
     }
     catch (error) {
         console.log(error);
     }
 });
-exports.createTodo = createTodo;
+exports.createPost = createPost;
 const updateTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { description, completed } = req.body;
         const { id } = req.params;
-        const validateUser = utils_1.updateTodoSchema.validate(req.body, utils_1.option);
+        const validateUser = utils_1.updateBlogPostSchema.validate(req.body, utils_1.option);
         if (validateUser.error) {
             res.status(400).json({ Error: validateUser.error.details[0].message });
         }

@@ -8,7 +8,7 @@ const todoSchema = new mongoose.Schema(
   {
     title: { type: String },
     content: { type: String },
-    image: { type: String },
+    pictures: { type: String},
     user: [
       {
         type: mongoose.Schema.Types.ObjectId,

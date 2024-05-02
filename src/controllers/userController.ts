@@ -14,7 +14,7 @@ export const RegisterUser = async (req: Request, res: Response) => {
     const password = req.body.password;
     const confirm_password = req.body.confirm_password;
     const phoneNumber = req.body.phoneNumber;
-    const country = req.body.phoneNumber;
+    const country = req.body.country;
     const age = req.body.age;
 
     //validate user
