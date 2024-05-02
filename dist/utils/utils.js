@@ -19,6 +19,7 @@ exports.RegisterSchema = joi_1.default.object({
         .label("confirm password")
         .messages({ "any.only": "{{#label}} does not match" }),
     phoneNumber: joi_1.default.string().required(),
+    country: joi_1.default.string().required(),
     age: joi_1.default.number().required(),
 });
 exports.LoginSchema = joi_1.default.object({

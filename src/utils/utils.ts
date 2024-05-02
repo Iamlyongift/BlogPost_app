@@ -14,6 +14,7 @@ export const RegisterSchema = Joi.object({
     .label("confirm password")
     .messages({ "any.only": "{{#label}} does not match" }),
   phoneNumber: Joi.string().required(),
+  country: Joi.string().required(),
   age: Joi.number().required(),
 });
 
