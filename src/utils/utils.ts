@@ -35,9 +35,10 @@ export const option = {
   },
 };
 
-export const creatTodoSchema = Joi.object({
-  description: Joi.string().required(),
-  completed: Joi.boolean().required()
+export const creatBlogPostSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+  image: Joi.string().required()
 })
 
 export const updateTodoSchema = Joi.object({
