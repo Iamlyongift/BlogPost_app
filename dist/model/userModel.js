@@ -14,7 +14,7 @@ const userSchema = new mongoose_1.default.Schema({
     todos: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: "todo"
+            ref: "blog"
         }
     ]
 }, {
