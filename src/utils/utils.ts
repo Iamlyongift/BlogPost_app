@@ -41,7 +41,8 @@ export const creatBlogPostSchema = Joi.object({
   image: Joi.string().required()
 })
 
-export const updateTodoSchema = Joi.object({
-  description: Joi.string().required(),
-  completed: Joi.boolean().required()
+export const updateBlogPostSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+  image: Joi.string().required()
 })    
