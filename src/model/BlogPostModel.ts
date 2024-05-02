@@ -6,8 +6,9 @@ interface TodoType {
 
 const todoSchema = new mongoose.Schema(
   {
-    description: { type: String },
-    completed: { type: Boolean },
+    title: { type: String },
+    content: { type: String },
+    image: { type: String },
     user: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +21,6 @@ const todoSchema = new mongoose.Schema(
   }
 );
 
-const Todo = mongoose.model<TodoType>("todo", todoSchema);
+const Blog = mongoose.model<TodoType>("blog", todoSchema);
 
-export = Todo;
+export = Blog;

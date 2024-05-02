@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { creatTodoSchema, updateTodoSchema, option } from "../utils/utils";
-import Todo from "../model/todoModel";
+import Todo from "../model/BlogPostModel";
 
 export const createTodo = async (req: Request | any, res: Response) => {
   try {

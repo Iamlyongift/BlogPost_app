@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteSingleTodo = exports.getUserTodos = exports.singleTodo = exports.getTodos = exports.updateTodo = exports.createTodo = void 0;
 const utils_1 = require("../utils/utils");
-const todoModel_1 = __importDefault(require("../model/todoModel"));
+const BlogPostModel_1 = __importDefault(require("../model/BlogPostModel"));
 const createTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const verify = req.user;
@@ -22,7 +22,7 @@ const createTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (validateUser.error) {
             res.status(400).json({ Error: validateUser.error.details[0].message });
         }
-        const newTodo = yield todoModel_1.default.create(Object.assign(Object.assign({}, req.body), { user: verify._id }));
+        const newTodo = yield BlogPostModel_1.default.create(Object.assign(Object.assign({}, req.body), { user: verify._id }));
         return res
             .status(200)
             .json({ message: "Todo created successfully", newTodo });
@@ -40,13 +40,13 @@ const updateTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (validateUser.error) {
             res.status(400).json({ Error: validateUser.error.details[0].message });
         }
-        const todo = yield todoModel_1.default.findById({ _id: id });
+        const todo = yield BlogPostModel_1.default.findById({ _id: id });
         if (!todo) {
             return res.status(400).json({
                 error: "Todo not found",
             });
         }
-        const updateRecord = yield todoModel_1.default.findByIdAndUpdate(id, {
+        const updateRecord = yield BlogPostModel_1.default.findByIdAndUpdate(id, {
             description,
             completed,
         }, {
@@ -71,7 +71,7 @@ const updateTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.updateTodo = updateTodo;
 const getTodos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const getAllUserTodos = yield todoModel_1.default.find().populate("user");
+        const getAllUserTodos = yield BlogPostModel_1.default.find().populate("user");
         res.status(200).json({
             msg: "Todos successfully fetched",
             getAllUserTodos,
@@ -85,7 +85,7 @@ exports.getTodos = getTodos;
 const singleTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const getsingleTodos = yield todoModel_1.default.findById(id);
+        const getsingleTodos = yield BlogPostModel_1.default.findById(id);
         if (!getsingleTodos) {
             return res.status(400).json({
                 error: "todo not found",
@@ -104,7 +104,7 @@ exports.singleTodo = singleTodo;
 const getUserTodos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId } = req.params;
-        const getAllUserTodos = yield todoModel_1.default.find({ user: userId });
+        const getAllUserTodos = yield BlogPostModel_1.default.find({ user: userId });
         res.status(200).json({
             msg: "Todos successfully fetched",
             getAllUserTodos,
@@ -118,7 +118,7 @@ exports.getUserTodos = getUserTodos;
 const deleteSingleTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const deleteSingleRecord = yield todoModel_1.default.findByIdAndDelete(id);
+        const deleteSingleRecord = yield BlogPostModel_1.default.findByIdAndDelete(id);
         if (!deleteSingleRecord) {
             return res.status(400).json({
                 error: "Todo not found",
