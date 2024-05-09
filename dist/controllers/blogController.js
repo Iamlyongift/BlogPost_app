@@ -46,7 +46,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             .status(200)
             .json({ message: "Blog Post created successfully", newPost });
     }
-    catch (error) { 
+    catch (error) {
         console.log(error);
     }
 });
