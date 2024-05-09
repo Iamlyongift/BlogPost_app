@@ -45,7 +45,7 @@ const RegisterUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 age,
             });
             return res.status(200).json({
-                message: "Registtration Successful",
+                message: "Registration Successful",
                 data: newUser,
             });
         }

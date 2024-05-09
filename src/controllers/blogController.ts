@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
-import { creatBlogPostSchema, updateBlogPostSchema, option } from "../utils/utils";
+import {
+  creatBlogPostSchema,
+  updateBlogPostSchema,
+  option,
+} from "../utils/utils";
 import Blog from "../model/BlogPostModel";
 import { v2 as cloudinaryV2 } from "cloudinary";
 
+// createPost
 export const createPost = async (req: Request | any, res: Response) => {
   try {
     const verify = req.user;
@@ -17,12 +22,13 @@ export const createPost = async (req: Request | any, res: Response) => {
     let links = [];
     if (Array.isArray(req.files) && req.files.length > 0) {
       // Upload images to Cloudinary and retrieve their URLs
-      links = await Promise.all(req.files.map(async (item: Record<string, any>) => {
-        const result = await cloudinaryV2.uploader.upload(item.path);
-        return result.secure_url;
-      }));
+      links = await Promise.all(
+        req.files.map(async (item: Record<string, any>) => {
+          const result = await cloudinaryV2.uploader.upload(item.path);
+          return result.secure_url;
+        })
+      );
     }
-
 
     const newPost = await Blog.create({
       ...validateUser.value,
@@ -38,9 +44,10 @@ export const createPost = async (req: Request | any, res: Response) => {
   }
 };
 
-export const updateTodo = async (req: Request, res: Response) => {
+// updatePost
+export const updatePost = async (req: Request, res: Response) => {
   try {
-    const { description, completed } = req.body;
+    const { pictures, ...rest } = req.body;
     const { id } = req.params;
     //validate todo form inputs
     const validateUser = updateBlogPostSchema.validate(req.body, option);
@@ -56,10 +63,11 @@ export const updateTodo = async (req: Request, res: Response) => {
         error: "Todo not found",
       });
     }
-    const updateRecord = await Blog.findByIdAndUpdate(id,
+    const updateRecord = await Blog.findByIdAndUpdate(
+      id,
       {
-        description,
-        completed,
+        ...rest,
+        pictures,
       },
 
       {
@@ -84,6 +92,7 @@ export const updateTodo = async (req: Request, res: Response) => {
   }
 };
 
+// getTodos
 export const getTodos = async (req: Request, res: Response) => {
   try {
     const getAllUserTodos = await Blog.find().populate("user");
@@ -97,6 +106,7 @@ export const getTodos = async (req: Request, res: Response) => {
   }
 };
 
+// singleTodo
 export const singleTodo = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -110,13 +120,14 @@ export const singleTodo = async (req: Request, res: Response) => {
     }
     res.status(200).json({
       msg: "Todos successfully fetched",
-      getsingleTodos
+      getsingleTodos,
     });
   } catch (error) {
     console.log(error);
   }
 };
 
+// /getUserTodos
 export const getUserTodos = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
@@ -132,13 +143,12 @@ export const getUserTodos = async (req: Request, res: Response) => {
   }
 };
 
-
-
+// deleteSingleTodo
 export const deleteSingleTodo = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const deleteSingleRecord = await Blog.findByIdAndDelete(id)
+    const deleteSingleRecord = await Blog.findByIdAndDelete(id);
     if (!deleteSingleRecord) {
       return res.status(400).json({
         error: "Todo not found",
@@ -147,7 +157,7 @@ export const deleteSingleTodo = async (req: Request, res: Response) => {
 
     res.status(200).json({
       message: "Todo successfully deleted",
-      deleteSingleRecord
+      deleteSingleRecord,
     });
   } catch (error) {
     console.error("Problem deleting todo");

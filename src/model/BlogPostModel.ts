@@ -6,7 +6,7 @@ interface TodoType {
 
 const todoSchema = new mongoose.Schema(
   {
-    title: { type: String },
+    title: { type: String},
     content: { type: String },
     pictures: { type: String},
     user: [
